@@ -13,3 +13,5 @@ export function Meters2() {
     </div>
   );
 }
+
+export default Meters2;

@@ -1,7 +1,6 @@
-function App() {
+export function Historial() {
   return (
-    <>
-      <h1 className="center separador">Ver Historial 📋</h1>
+    <div><h1 className="center separador">Ver Historial 📋</h1>
       <div className=" center div-cotizador">
         <table>
           <thead>
@@ -28,8 +27,8 @@ function App() {
             <button className="button button-outline">VOLVER</button>
           </a>
         </div>
-      </div>
-    </>
+      </div></div>
   );
 }
-export default App;
+
+export default Historial;
