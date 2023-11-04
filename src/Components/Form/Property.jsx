@@ -1,11 +1,12 @@
-export function Location({ datos, setUbicacion }) {
+export function Property({ datos, setPropiedad }) {
   const handleChange = (e) => {
-    setUbicacion(e.target.value);
+    setPropiedad(e.target.value);
   };
+
   return (
     <div>
-      <label htmlFor="ubicacion">Selecciona su ubicación</label>
-      <select id="ubicacion" onChange={handleChange}>
+      <label htmlFor="propiedad">Selecciona el tipo de propiedad</label>
+      <select id="propiedad" onChange={handleChange}>
         <option selected disabled>
           ...
         </option>
@@ -19,4 +20,4 @@ export function Location({ datos, setUbicacion }) {
   );
 }
 
-export default Location;
+export default Property;

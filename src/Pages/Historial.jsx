@@ -1,6 +1,32 @@
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
+
 export function Historial() {
+  const [cotizaciones, setcotizaciones] = useState([]);
+  const navigate = useNavigate(); // Obtiene la función navigate
+
+  useEffect(() => {
+    // Recupera los datos del LocalStorage
+    const cotizacionesGuardadas =
+      JSON.parse(localStorage.getItem("cotizacion")) || [];
+    setcotizaciones(cotizacionesGuardadas);
+  }, []);
+
+  const eliminarCotizacion = (index) => {
+    const nuevasCotizaciones = [...cotizaciones];
+    nuevasCotizaciones.splice(index, 1);
+    setcotizaciones(nuevasCotizaciones);
+    localStorage.setItem("cotizacion", JSON.stringify(nuevasCotizaciones));
+  };
+
+  const vaciarHistorial = () => {
+    setcotizaciones([]);
+    localStorage.removeItem("cotizacion");
+  };
+
   return (
-    <div><h1 className="center separador">Ver Historial 📋</h1>
+    <div>
+      <h1 className="center separador">Ver Historial 📋</h1>
       <div className=" center div-cotizador">
         <table>
           <thead>
@@ -10,24 +36,47 @@ export function Historial() {
               <th>Ubicación</th>
               <th>Metros cuadrados</th>
               <th>Póliza mensual</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Aquí</td>
-              <td>verás</td>
-              <td>las</td>
-              <td>cotizaciones</td>
-              <td>realizadas</td>
-            </tr>
+            {cotizaciones.map(
+              ({ fecha, propiedad, ubicacion, mts2, poliza }, index) => (
+                <tr key={index}>
+                  <td>{fecha}</td>
+                  <td>{propiedad}</td>
+                  <td>{ubicacion}</td>
+                  <td>{mts2}</td>
+                  <td>{poliza}</td>
+                  <td>
+                    <span
+                      className="eliminaritem"
+                      onClick={() => eliminarCotizacion(index)}>
+                      ❌
+                    </span>
+                  </td>
+                </tr>
+              )
+            )}
           </tbody>
         </table>
         <div className="center separador">
-          <a href="index.html">
-            <button className="button button-outline">VOLVER</button>
-          </a>
+          <button
+            onClick={vaciarHistorial}
+            className="button button-outline"
+            id="botoneshistorial">
+            🗑️
+          </button>
+          <span style={{ margin: "0 10px" }} />
+          <button
+            onClick={() => navigate(-1)} /* Navega atrás */
+            className="button button-outline"
+            id="botoneshistorial">
+            VOLVER
+          </button>
         </div>
-      </div></div>
+      </div>
+    </div>
   );
 }
 
